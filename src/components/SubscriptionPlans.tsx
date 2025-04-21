@@ -54,7 +54,7 @@ export default function SubscriptionPlans() {
       {plans.map((plan) => (
         <div 
           key={plan.id} 
-          className={`rounded-lg overflow-hidden shadow-sm ${plan.popular ? 'border-2 border-[#5932EA] relative' : 'border border-gray-200'}`}
+          className={`rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${plan.popular ? 'border-2 border-[#5932EA] relative' : 'border border-gray-200'}`}
         >
           {plan.popular && (
             <div className="absolute top-0 inset-x-0 text-xs text-center py-1 bg-[#5932EA] text-white font-semibold uppercase tracking-wide">
@@ -63,10 +63,10 @@ export default function SubscriptionPlans() {
           )}
           
           <div className={`px-6 py-8 ${plan.popular ? 'pt-10' : ''}`}>
-            <h3 className="text-2xl font-bold text-center">{plan.name}</h3>
+            <h3 className="text-2xl font-bold text-center text-black">{plan.name}</h3>
             <div className="mt-4 text-center">
-              <span className="text-5xl font-extrabold">{plan.price}</span>
-              <span className="text-xl text-gray-500">/{plan.period}</span>
+              <span className="text-5xl font-extrabold text-black">{plan.price}</span>
+              <span className="text-xl text-black">/{plan.period}</span>
             </div>
             
             <ul className="mt-8 space-y-4">
@@ -75,7 +75,7 @@ export default function SubscriptionPlans() {
                   <svg className="h-5 w-5 text-[#5932EA] mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span>{feature}</span>
+                  <span className="text-black">{feature}</span>
                 </li>
               ))}
             </ul>
@@ -83,7 +83,7 @@ export default function SubscriptionPlans() {
             <div className="mt-8">
               <Link 
                 href="/signup" 
-                className={`w-full block text-center px-6 py-3 rounded-full text-white font-medium ${plan.popular ? 'bg-[#5932EA] hover:bg-[#4A29C6]' : 'bg-gray-800 hover:bg-gray-700'}`}
+                className={`w-full block text-center px-6 py-3 rounded-full text-white font-medium transform hover:scale-105 transition-all duration-200 ${plan.popular ? 'bg-[#5932EA] hover:bg-[#4A29C6]' : 'bg-gray-800 hover:bg-gray-700'}`}
               >
                 {plan.cta}
               </Link>

@@ -38,7 +38,7 @@ export default function Navbar() {
             </div>
           </div>
           <div className="hidden sm:flex sm:items-center sm:space-x-4">
-            <div className="relative">
+            {/* <div className="relative">
               <select className="appearance-none bg-transparent pr-8 pl-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-[#5932EA]">
                 <option>EN</option>
                 <option>ES</option>
@@ -49,7 +49,7 @@ export default function Navbar() {
                   <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
                 </svg>
               </div>
-            </div>
+            </div> */}
             <Link 
               href="/login" 
               className="text-black hover:text-[#5932EA] px-3 py-2 text-sm font-medium transition-colors duration-200"
