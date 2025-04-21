@@ -62,12 +62,12 @@ export default function SuccessStories() {
             </div>
             <div className="p-6 md:p-8 md:w-2/3">
               <div className="flex items-center">
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#5932EA] bg-opacity-10 text-[#5932EA]">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#5932EA] bg-opacity-10 text-white">
                   {story.goal}
                 </span>
                 <span className="ml-3 text-sm text-gray-600">{story.achievement}</span>
               </div>
-              <h3 className="mt-3 text-xl font-semibold">{story.name}, {story.age}</h3>
+              <h3 className="mt-3 text-xl text-black font-semibold">{story.name}, {story.age}</h3>
               <p className="mt-3 text-gray-600 italic">"{story.quote}"</p>
               <div className="mt-6">
                 <Link

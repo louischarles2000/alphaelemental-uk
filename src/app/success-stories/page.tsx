@@ -37,8 +37,8 @@ export default function SuccessStoriesPage() {
       achievement: "Worked out 4x weekly for a full year",
       quote: "For the first time in my life, I've stuck with a fitness routine for more than a few weeks.",
       testimonial: "I was always the person who would get excited about fitness for a month and then drop off. Alpha-Elemental changed that completely. The variety of workouts kept me engaged, and the progress tracking helped me see that consistency really does pay off. The community aspect was a game-changer too - having accountability partners made all the difference. A full year of consistent workouts later, I have more energy, better sleep, and confidence I never thought possible!",
-      beforeImage: "/success/sarah-before.jpg",
-      afterImage: "/success/sarah-after.jpg",
+      beforeImage: "/success/jennifer-before.jpg",
+      afterImage: "/success/jennifer-after.jpg",
       slug: "sarah-consistency-journey"
     },
     {
@@ -49,8 +49,8 @@ export default function SuccessStoriesPage() {
       achievement: "Eliminated chronic back pain",
       quote: "I can play with my grandkids without pain for the first time in years. Life-changing!",
       testimonial: "After years of chronic back pain and being told I just had to live with it, I was skeptical that any fitness program could help. The Alpha-Elemental team created a program specifically designed to strengthen my core and improve my mobility. The progress was slow at first, but within three months, I noticed significantly less pain. Now, I can get down on the floor and play with my grandkids, go hiking with my wife, and enjoy life again. The functional approach to fitness that Alpha-Elemental offers has truly given me back my quality of life.",
-      beforeImage: "/success/david-before.jpg",
-      afterImage: "/success/david-after.jpg",
+      beforeImage: "/success/michael-before.jpg",
+      afterImage: "/success/michael-after.jpg",
       slug: "david-functional-fitness-story"
     }
   ];
@@ -101,7 +101,7 @@ export default function SuccessStoriesPage() {
                 </div>
                 <div className="p-6 md:p-8 md:w-2/3">
                   <div className="flex items-center">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#5932EA] bg-opacity-10 text-[#5932EA]">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#5932EA] bg-opacity-10 text-white">
                       {story.goal}
                     </span>
                     <span className="ml-3 text-sm text-black">{story.achievement}</span>
