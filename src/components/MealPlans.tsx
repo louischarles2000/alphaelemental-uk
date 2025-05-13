@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import WaveBorder from "./WaveBorder";
 
 export default function MealPlans() {
   const mealPlans = [
@@ -40,7 +41,7 @@ export default function MealPlans() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {mealPlans.map((meal) => (
           <Link href={`/activities/recipes/${meal.slug}`} key={meal.id}>
-            <div className="bg-gray-50 rounded-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+            <div className="bg-gray-50 rounded-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 relative">
               <div className="h-56 w-full relative">
                 <Image
                   src={meal.image}
@@ -52,6 +53,9 @@ export default function MealPlans() {
                 <div className="absolute top-2 right-2 bg-white text-[#5932EA] text-xs font-semibold px-2 py-1 rounded-full">
                   {meal.diet}
                 </div>
+                
+                {/* Wave Border */}
+                <WaveBorder color="#5932EA" height={28} className="z-10" />
               </div>
               <div className="p-4">
                 <div className="flex justify-between items-center mb-2">

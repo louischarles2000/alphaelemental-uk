@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import WaveBorder from "./WaveBorder";
 
 export default function FeaturedWorkouts() {
   const workouts = [
@@ -49,7 +50,7 @@ export default function FeaturedWorkouts() {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {workouts.map((workout) => (
         <Link href={`/activities/workouts/${workout.slug}`} key={workout.id}>
-          <div className="bg-white rounded-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+          <div className="bg-white rounded-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 relative">
             <div className="h-48 w-full relative">
               <Image
                 src={workout.image}
@@ -61,6 +62,9 @@ export default function FeaturedWorkouts() {
               <div className="absolute top-2 right-2 bg-[#5932EA] text-white text-xs font-semibold px-2 py-1 rounded">
                 {workout.category}
               </div>
+              
+              {/* Wave Border */}
+              <WaveBorder height={24} className="z-10" />
             </div>
             <div className="p-4">
               <div className="flex justify-between items-center mb-2">
