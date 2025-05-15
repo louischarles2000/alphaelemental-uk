@@ -43,15 +43,35 @@ export default function FeaturedWorkouts() {
       category: "Strength",
       image: "/workouts/core.jpg",
       slug: "core-crusher-david"
+    },
+    {
+      id: 5,
+      title: "HIIT Cardio Blast",
+      instructor: "Jason",
+      duration: "35 MIN",
+      difficulty: "Advanced",
+      category: "HIIT",
+      image: "/workouts/hiit.jpg",
+      slug: "hiit-cardio-blast-jason"
+    },
+    {
+      id: 6,
+      title: "Pilates Fusion",
+      instructor: "Megan",
+      duration: "40 MIN",
+      difficulty: "Intermediate",
+      category: "Pilates",
+      image: "/workouts/pilates.jpg",
+      slug: "pilates-fusion-megan"
     }
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {workouts.map((workout) => (
         <Link href={`/activities/workouts/${workout.slug}`} key={workout.id}>
           <div className="bg-white rounded-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 relative">
-            <div className="h-48 w-full relative">
+            <div className="h-56 w-full relative">
               <Image
                 src={workout.image}
                 alt={workout.title}
