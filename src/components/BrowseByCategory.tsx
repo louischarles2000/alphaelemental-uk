@@ -1,69 +1,34 @@
+'use client'
 import Image from "next/image";
 import Link from "next/link";
+import { useStore } from "./HOC/Context/StoreProvider";
+import { IMAGE_PREFIX } from "@/lib/constants";
+import { formatDecodedString } from "@/lib/utils";
 
 export default function BrowseByCategory() {
-  const categories = [
-    {
-      id: 1,
-      title: "Landing Page Resources",
-      description: "Convert more visitors with our landing page toolkits",
-      image: "/categories/marketing.jpg",
-      slug: "landing-page-resources"
-    },
-    {
-      id: 2,
-      title: "Email Marketing Resources",
-      description: "Build relationships and drive sales with proven email strategies",
-      image: "/categories/marketing.jpg",
-      slug: "email-marketing-resources"
-    },
-    {
-      id: 3,
-      title: "Sales Funnel Systems",
-      description: "Complete systems to nurture leads into paying customers",
-      image: "/categories/marketing.jpg",
-      slug: "sales-funnel-systems"
-    },
-    {
-      id: 4,
-      title: "Marketing Optimization",
-      description: "Improve conversion rates and maximize ROI",
-      image: "/categories/marketing.jpg",
-      slug: "marketing-optimization"
-    },
-    {
-      id: 5,
-      title: "Digital Analytics",
-      description: "Measure success and make data-driven decisions",
-      image: "/categories/marketing.jpg",
-      slug: "digital-analytics"
-    },
-    {
-      id: 6,
-      title: "Content Creation",
-      description: "Develop engaging content that converts",
-      image: "/categories/marketing.jpg",
-      slug: "content-creation"
-    }
-  ];
+  const { categories, loading } = useStore();
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {categories.map((category) => (
-        <Link href={`/categories/${category.slug}`} key={category.id}>
+        <Link href={`/categories/${category.id}?slug=${category.category_name.split(' ').join('-').trim().toLowerCase()}`} key={category.id}>
           <div className="bg-white rounded-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 relative">
             <div className="h-56 w-full relative">
               <Image
-                src={category.image}
-                alt={category.title}
+                src={category.image ? `${IMAGE_PREFIX}/${category.image}` : '/categories/marketing.jpg'}
+                alt={category.category_name}
                 layout="fill"
                 objectFit="cover"
                 className="group-hover:scale-105 transition-transform duration-300"
               />
             </div>
             <div className="p-4">
-              <h3 className="text-lg font-semibold mb-2 text-black">{category.title}</h3>
-              <p className="text-sm text-gray-600">{category.description}</p>
+              <h3 className="text-lg font-semibold mb-2 text-black">{category.category_name}</h3>
+              <p className="text-sm text-gray-600 line-clamp-3">{formatDecodedString(formatDecodedString(category.description))}</p>
               <div className="mt-4">
                 <span className="text-[var(--primary)] text-sm font-medium flex items-center">
                   View Category

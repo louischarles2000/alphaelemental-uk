@@ -1,12 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
-import Navbar from "../../../components/Navbar";
-import Footer from "../../../components/Footer";
-
-// Define categories data with products
-const categories = [
+export const defaultCategories = [
   {
     id: 1,
+    tag: 'Landing Page',
     title: "Landing Page Resources",
     description: "Convert more visitors with our landing page toolkits",
     longDescription: "Convert more visitors into leads and customers with our comprehensive landing page toolkit.",
@@ -85,6 +80,7 @@ const categories = [
   },
   {
     id: 2,
+    tag: 'Email',
     title: "Email Marketing Resources",
     description: "Build relationships and drive sales with proven email strategies",
     longDescription: "Connect with prospects, build relationships, and close more deals with effective email marketing strategies.",
@@ -194,6 +190,7 @@ const categories = [
   },
   {
     id: 3,
+    tag: 'Sales',
     title: "Sales Funnel Systems",
     description: "Complete systems to nurture leads into paying customers",
     longDescription: "Create seamless customer journeys that convert prospects into loyal customers at every stage.",
@@ -272,6 +269,7 @@ const categories = [
   },
   {
     id: 4,
+    tag: 'Marketing',
     title: "Marketing Optimization",
     description: "Improve conversion rates and maximize ROI",
     longDescription: "Fine-tune your marketing campaigns for better performance, higher ROI, and sustainable growth.",
@@ -350,6 +348,7 @@ const categories = [
   },
   {
     id: 5,
+    tag: 'Digital Analytics',
     title: "Digital Analytics",
     description: "Measure success and make data-driven decisions",
     longDescription: "Make data-driven marketing decisions with our analytics resources. Includes dashboard templates, KPI frameworks, and tracking systems.",
@@ -374,6 +373,7 @@ const categories = [
   },
   {
     id: 6,
+    tag: 'Content Creation',
     title: "Content Creation",
     description: "Develop engaging content that converts",
     longDescription: "Create compelling content that drives engagement and conversions. Includes templates, frameworks, and optimization guides for various content types.",
@@ -397,186 +397,3 @@ const categories = [
     ]
   }
 ];
-
-export default function CategoryDetail({ params }: { params: { slug: string } }) {
-  // Find the category based on the slug
-  const category = categories.find(c => c.slug === params.slug);
-  
-  // If category not found, return a 404 page
-  if (!category) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-800">Category not found</h1>
-          <p className="mt-4 text-gray-600">The category you're looking for doesn't exist or has been removed.</p>
-          <Link href="/categories" className="mt-6 inline-block bg-[var(--primary)] text-white px-6 py-3 rounded-lg">
-            Return to Categories
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
-  // Get related categories info
-  const relatedCategoriesInfo = categories.filter(c => 
-    category.relatedCategories.includes(c.slug)
-  );
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      
-      <main className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumbs */}
-          <div className="mb-8">
-            <div className="flex items-center text-sm text-gray-500">
-              <Link href="/" className="hover:text-[var(--primary)]">Home</Link>
-              <span className="mx-2">/</span>
-              <Link href="/categories" className="hover:text-[var(--primary)]">Categories</Link>
-              <span className="mx-2">/</span>
-              <span className="text-[var(--primary)]">{category.title}</span>
-            </div>
-          </div>
-          
-          {/* Category Hero Section */}
-          <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-16">
-            <div className="relative h-64">
-              <Image
-                src={category.image}
-                alt={category.title}
-                layout="fill"
-                objectFit="cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent"></div>
-              <div className="absolute inset-0 flex flex-col justify-center px-8 md:px-16">
-                <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">{category.title}</h1>
-                <p className="text-white/90 text-lg max-w-2xl">{category.longDescription}</p>
-              </div>
-            </div>
-          </div>
-          
-          {/* Why These Resources Work Section */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-bold text-black mb-6">{category.headline}</h2>
-            <p className="text-gray-600 mb-8">
-              Our {category.title.toLowerCase()} are designed to help you:
-            </p>
-            
-            <ul className="space-y-3">
-              {category.benefits.map((benefit, index) => (
-                <li key={index} className="flex items-start">
-                  <span className="inline-flex items-center justify-center w-6 h-6 mr-3 bg-[var(--primary)]/10 rounded-full text-[var(--primary)] font-bold flex-shrink-0">•</span>
-                  <span className="text-black">{benefit}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          {/* Individual Products Section */}
-          {category.products.length > 0 && (
-            <div className="mb-16">
-              <h2 className="text-2xl font-bold text-black mb-8">Individual Products</h2>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {category.products.map((product) => (
-                  <div key={product.id} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 className="font-bold text-lg text-black mb-2">{product.title}</h3>
-                    <p className="text-gray-600 text-sm mb-4">{product.description}</p>
-                    
-                    <div className="flex items-center justify-between">
-                      <span className="text-black font-bold text-xl">€{product.price}</span>
-                      <div className="flex space-x-2">
-                        <Link 
-                          href={`/products/${product.slug}`} 
-                          className="bg-white border border-[var(--primary)] text-[var(--primary)] px-4 py-2 rounded-lg text-sm font-medium hover:bg-[var(--primary)]/5 transition-colors duration-200"
-                        >
-                          View Details
-                        </Link>
-                        {/* <button 
-                          className="bg-[var(--primary)] text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-[#4A20C0] transition-colors duration-200"
-                        >
-                          Add to Cart
-                        </button> */}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-          
-          {/* Bundles Section */}
-          {category.bundles.length > 0 && (
-            <div className="mb-16">
-              {category.bundles.map((bundle) => (
-                <div key={bundle.id} className="bg-white p-8 rounded-xl shadow-md border-2 border-[var(--accent)] mb-6">
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                    <div>
-                      <h2 className="text-2xl font-bold text-black mb-2">{bundle.title}</h2>
-                      <p className="text-gray-600 mb-4">{bundle.description}</p>
-                      <p className="text-gray-600">{bundle.longDescription}</p>
-                    </div>
-                    
-                    <div className="flex flex-col items-center md:items-end">
-                      <div className="flex items-center mb-2">
-                        <span className="text-gray-500 line-through text-sm mr-2">€{bundle.regularPrice}</span>
-                        <span className="text-black font-bold text-2xl">€{bundle.price}</span>
-                      </div>
-                      <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded mb-4">
-                        Save €{bundle.savings}
-                      </span>
-                      <Link 
-                        href={`/bundles/${bundle.slug}`} 
-                        className="w-full md:w-auto bg-[var(--accent)] text-black px-6 py-3 rounded-lg font-medium hover:bg-[var(--accent)]/90 transition-colors duration-200 text-center"
-                      >
-                        Buy This Bundle
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-          
-          {/* Related Categories Section */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-bold text-black mb-8">Related Categories</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {relatedCategoriesInfo.map((relatedCategory) => (
-                <Link href={`/categories/${relatedCategory.slug}`} key={relatedCategory.id}>
-                  <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col">
-                    <div className="relative h-48">
-                      <Image
-                        src={relatedCategory.image}
-                        alt={relatedCategory.title}
-                        layout="fill"
-                        objectFit="cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                      <div className="absolute bottom-0 left-0 p-4">
-                        <h3 className="text-xl font-bold text-white mb-1">{relatedCategory.title}</h3>
-                        <p className="text-white/80 text-sm">{relatedCategory.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-          
-          {/* Browse All Products Button */}
-          <div className="text-center">
-            <Link 
-              href="/products"
-              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-md text-white bg-[var(--primary)] hover:bg-[#4A20C0] transform hover:scale-105 transition-all duration-200"
-            >
-              Browse All Products
-            </Link>
-          </div>
-        </div>
-      </main>
-      
-      <Footer />
-    </div>
-  );
-} 

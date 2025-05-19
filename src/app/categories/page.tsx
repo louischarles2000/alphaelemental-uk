@@ -1,65 +1,14 @@
+'use client';
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import { useStore } from "@/components/HOC/Context/StoreProvider";
+import { IMAGE_PREFIX } from "@/lib/constants";
+import { formatDecodedString } from "@/lib/utils";
 
 export default function CategoriesPage() {
-  const categories = [
-    {
-      id: 1,
-      title: "Landing Page Resources",
-      description: "Convert more visitors with our landing page toolkits",
-      longDescription: "Transform your website visitors into leads and customers with our comprehensive landing page resources. Includes templates, formulas, and optimization guides.",
-      image: "/categories/marketing.jpg",
-      productCount: 12,
-      slug: "landing-page-resources"
-    },
-    {
-      id: 2,
-      title: "Email Marketing Resources",
-      description: "Build relationships and drive sales with proven email strategies",
-      longDescription: "Nurture leads and drive conversions with our email marketing resources. Includes sequence templates, subject line swipe files, and automation guides.",
-      image: "/categories/marketing.jpg",
-      productCount: 9,
-      slug: "email-marketing-resources"
-    },
-    {
-      id: 3,
-      title: "Sales Funnel Systems",
-      description: "Complete systems to nurture leads into paying customers",
-      longDescription: "Guide prospects through the customer journey with our complete sales funnel systems. Includes blueprints, scripts, and optimization strategies.",
-      image: "/categories/marketing.jpg",
-      productCount: 8,
-      slug: "sales-funnel-systems"
-    },
-    {
-      id: 4,
-      title: "Marketing Optimization",
-      description: "Improve conversion rates and maximize ROI",
-      longDescription: "Maximize your marketing ROI with our optimization resources. Includes analytics tools, testing frameworks, and conversion rate optimization guides.",
-      image: "/categories/marketing.jpg",
-      productCount: 11,
-      slug: "marketing-optimization"
-    },
-    {
-      id: 5,
-      title: "Digital Analytics",
-      description: "Measure success and make data-driven decisions",
-      longDescription: "Make data-driven marketing decisions with our analytics resources. Includes dashboard templates, KPI frameworks, and tracking systems.",
-      image: "/categories/marketing.jpg",
-      productCount: 7,
-      slug: "digital-analytics"
-    },
-    {
-      id: 6,
-      title: "Content Creation",
-      description: "Develop engaging content that converts",
-      longDescription: "Create compelling content that drives engagement and conversions. Includes templates, frameworks, and optimization guides for various content types.",
-      image: "/categories/marketing.jpg",
-      productCount: 10,
-      slug: "content-creation"
-    }
-  ];
+  const { categories, loading } = useStore();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -75,27 +24,28 @@ export default function CategoriesPage() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {loading && <div>Loading...</div>}
             {categories.map((category) => (
-              <Link href={`/categories/${category.slug}`} key={category.id}>
+              <Link href={`/categories/${category.id}?slug=${category.category_name.split(' ').join('-').trim().toLowerCase()}`} key={category.id}>
                 <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 flex flex-col h-full">
                   <div className="relative h-64">
                     <Image
-                      src={category.image}
-                      alt={category.title}
+                      src={category.image ? `${IMAGE_PREFIX}/${category.image}` : '/categories/marketing.jpg'}
+                      alt={category.category_name}
                       layout="fill"
                       objectFit="cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                     <div className="absolute bottom-0 left-0 p-6">
-                      <h2 className="text-2xl font-bold text-white mb-2">{category.title}</h2>
-                      <p className="text-white/80 mb-2">{category.description}</p>
+                      <h2 className="text-2xl font-bold text-white mb-2">{category.category_name}</h2>
+                      <p className="text-white/80 mb-2">{formatDecodedString(category.meta_description)}</p>
                       <span className="text-[var(--accent)] text-sm font-medium">
-                        {category.productCount} resources
+                        {category.total_products} resources
                       </span>
                     </div>
                   </div>
                   <div className="p-6">
-                    <p className="text-gray-600 mb-4">{category.longDescription}</p>
+                    <p className="text-gray-600 mb-4">{formatDecodedString(category.description)}</p>
                     <div className="flex justify-between items-center">
                       <span className="text-[var(--primary)] font-medium flex items-center">
                         Explore Category
@@ -114,7 +64,7 @@ export default function CategoriesPage() {
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-black mb-3">Not Sure Where to Start?</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                If you're not sure which category is right for you, try one of our curated bundles for specific marketing goals.
+                {`If you're not sure which category is right for you, try one of our curated bundles for specific marketing goals.`}
               </p>
             </div>
             
