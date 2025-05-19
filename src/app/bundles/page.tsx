@@ -2,6 +2,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import BestSellingBundles from "../../components/BestSellingBundles";
 import Link from "next/link";
+import BundlesList from "@/components/Screens/BundlesScreen/BundlesList";
 
 export default function BundlesPage() {
   return (
@@ -20,6 +21,7 @@ export default function BundlesPage() {
           <section className="mb-16">
             <h2 className="text-2xl font-bold text-black mb-8">Popular Bundles</h2>
             <BestSellingBundles />
+            <BundlesList />
           </section>
           
           <section className="mb-16 bg-white p-8 rounded-xl shadow-md">

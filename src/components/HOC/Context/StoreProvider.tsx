@@ -1,5 +1,5 @@
 'use client';
-import { CategoryType, CurrencyType } from '@/lib/types';
+import { CategoryType, CurrencyType, ProductType, ReviewType } from '@/lib/types';
 import axios from 'axios';
 import React, { createContext, useEffect, useState } from 'react';
 
@@ -7,6 +7,8 @@ type StoreContextType = {
   categories: CategoryType[];
   currency: CurrencyType;
   loading: boolean;
+  testimonials: ReviewType[];
+  featuredProducts: ProductType[];
 };
 
 export const StoreContext = createContext<StoreContextType>({
@@ -21,10 +23,14 @@ export const StoreContext = createContext<StoreContextType>({
     value: 1
   },
   loading: true,
+  testimonials: [],
+  featuredProducts: []
 }); 
 
 export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [testimonials, setTestimonials] = useState<ReviewType[]>([]);
+  const [featuredProducts, setFeaturedProducts] = useState<ProductType[]>([]);
   const [currency, setCurrency] = useState<CurrencyType>({
     currency_id: 0,
     code: 'USD',
@@ -56,10 +62,32 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     }
   } 
 
+  const getReviews = async () => {
+    try {
+      const reviews = await axios.get("/api/reviews", { params: { limit: 3, rating: 5 } });
+      setTestimonials(reviews.data.Data.reviews);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const fetchFeaturedProducts = async () => {
+    try {
+      const { data } = await axios.get('/api/products/featured', { params: { limit: 3, page: 1, model: 'Bundle' } });
+      console.log('featured products:', data);
+      const products: [ProductType] = data.Data.products;
+      setFeaturedProducts(products);
+    } catch (error) {
+      console.error('Error fetching featured products:', error);
+    }
+  }
+
   useEffect(() => {
     const promises = [
       fetchCategories(),
       getStoreCurrency(),
+      getReviews(),
+      fetchFeaturedProducts(),
     ];
     Promise.all(promises)
       .then(() => {
@@ -75,7 +103,7 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <StoreContext.Provider value={{ categories, loading, currency }}>
+    <StoreContext.Provider value={{ categories, loading, currency, testimonials, featuredProducts: featuredProducts }}>
       {children}
     </StoreContext.Provider>
   );
