@@ -1,0 +1,25 @@
+node_modules
+.next
+out
+build
+*.log
+*.lock
+# Temporary files
+tmp
+temp
+# Editor and IDE files
+.idea
+.vscode
+*.swp
+*.swo
+# System files
+.DS_Store
+Thumbs.db
+# Environment variables - IMPORTANT
+.env
+.env.*
+# Docker related (optional, but good to have)
+Dockerfile
+.dockerignore
+docker-compose.yml
+# Add any other files or directories that are not needed in the Docker image
