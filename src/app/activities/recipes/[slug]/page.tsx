@@ -3,7 +3,6 @@ import Link from "next/link";
 import Navbar from "../../../../components/Navbar";
 import Footer from "../../../../components/Footer";
 import RecommendationsSection from "../../../../components/RecommendationsSection";
-import { useState } from "react";
 import { IoTimeOutline } from "react-icons/io5";
 import { BsFire } from "react-icons/bs";
 import { TbMeat } from "react-icons/tb";
@@ -92,8 +91,9 @@ const getRecommendedMeals = () => {
   ];
 };
 
-export default function MealDetailPage({ params }: { params: { slug: string } }) {
-  const meal = getMealBySlug(params.slug);
+export default async function MealDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const  { slug } = await params;
+  const meal = getMealBySlug(slug);
   const recommendedMeals = getRecommendedMeals();
   
   // In a client component, we'd use state for tab switching
