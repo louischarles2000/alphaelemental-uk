@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import * as he from "html-entities";
 
 export function decodeToPlainHTMLText(htmlString: string) {
