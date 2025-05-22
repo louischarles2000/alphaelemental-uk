@@ -1,15 +1,27 @@
 'use client'
 import React from 'react'
 import { useStore } from './HOC/Context/StoreProvider';
+import { usePrice } from '@/hooks/usePrice';
 
 function PriceFormat({ amount }: { amount: string }) {
-  const { currency } = useStore();
+  const { currency: storeCurrency } = useStore();
+  const { getPrice } = usePrice();
 
-  return (
-    <>
-    {currency.symbol_left}{parseFloat(amount).toFixed(currency.decimal_place)}{currency.symbol_right}
-    </>
-  )
+  // Convert the string amount to a number and use our currency conversion
+  const priceInUSD = parseFloat(amount);
+  
+  // Use our new currency conversion system, but fall back to the store's currency 
+  // format if there's an issue
+  try {
+    return <>{getPrice(priceInUSD)}</>;
+  } catch {
+    // Fallback to the original implementation
+    return (
+      <>
+        {storeCurrency.symbol_left}{priceInUSD.toFixed(storeCurrency.decimal_place)}{storeCurrency.symbol_right}
+      </>
+    );
+  }
 }
 
 export default PriceFormat

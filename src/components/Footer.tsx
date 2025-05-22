@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaCcVisa, FaCcMastercard } from "react-icons/fa";
 
 export default function Footer() {
@@ -33,20 +33,20 @@ export default function Footer() {
                 <FaLinkedin size={20} />
               </a>
               <a
-                href="https://twitter.com"
+                href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-300 hover:text-[var(--accent)]"
               >
-                <FaTwitter size={20} />
+                <FaFacebook size={20} />
               </a>
               <a
-                href="https://youtube.com"
+                href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-300 hover:text-[var(--accent)]"
               >
-                <FaYoutube size={20} />
+                <FaInstagram size={20} />
               </a>
             </div>
             <div className="flex space-x-4 mb-6">
