@@ -48,7 +48,6 @@ export default function ContactPage() {
       console.log(res);
       // refresh form
       if (res) {
-        event.currentTarget.reset();
         setFormData({
           name: '',
           email: '',
