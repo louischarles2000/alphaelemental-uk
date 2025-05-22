@@ -1,9 +1,13 @@
+'use client';
 import Image from "next/image";
 import Link from "next/link";
 import { FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaCcVisa, FaCcMastercard } from "react-icons/fa";
+import { useStore } from "./HOC/Context/StoreProvider";
 
 export default function Footer() {
+  const { categories } = useStore();
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -63,43 +67,23 @@ export default function Footer() {
           </div>
 
           {/* Quick links */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Products</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/products/landing-page-resources"
-                  className="text-gray-300 hover:text-[var(--accent)]"
-                >
-                  Landing Page Resources
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/products/email-marketing"
-                  className="text-gray-300 hover:text-[var(--accent)]"
-                >
-                  Email Marketing
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/products/sales-funnels"
-                  className="text-gray-300 hover:text-[var(--accent)]"
-                >
-                  Sales Funnels
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/products/optimization"
-                  className="text-gray-300 hover:text-[var(--accent)]"
-                >
-                  Optimization Tools
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {categories.length > 0 && (
+            <div>
+              <h3 className="text-white font-semibold mb-4">Product Categories</h3>
+              <ul className="space-y-2">
+                {categories.map((category) => (
+                  <li key={category.id}>
+                    <Link
+                      href={`/categories/${category.id}?slug=${category.category_name.split(' ').join('-').trim().toLowerCase()}`}
+                      className="text-gray-300 hover:text-[var(--accent)]"
+                    >
+                      {category.category_name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div>
             <h3 className="text-white font-semibold mb-4">Company</h3>
@@ -122,7 +106,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/faq"
+                  href="/contact"
                   className="text-gray-300 hover:text-[var(--accent)]"
                 >
                   FAQ
@@ -130,7 +114,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/privacy"
+                  href="/#"
                   className="text-gray-300 hover:text-[var(--accent)]"
                 >
                   Privacy Policy
@@ -138,7 +122,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/terms"
+                  href="/#"
                   className="text-gray-300 hover:text-[var(--accent)]"
                 >
                   Terms of Service
@@ -146,7 +130,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/refund-policy"
+                  href="/#"
                   className="text-gray-300 hover:text-[var(--accent)]"
                 >
                   Refund Policy
