@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { StoreProvider } from "@/components/HOC/Context/StoreProvider";
+import { CurrencyProvider } from "@/context/CurrencyContext";
 import React, { Suspense } from "react"; // Import Suspense
 
 const geistSans = Geist({
@@ -30,9 +31,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <StoreProvider>
-          <Suspense fallback={<div>Loading...</div>}>
-          {children}
-          </Suspense>
+          <CurrencyProvider>
+            <Suspense fallback={<div>Loading...</div>}>
+              {children}
+            </Suspense>
+          </CurrencyProvider>
         </StoreProvider>
       </body>
     </html>
