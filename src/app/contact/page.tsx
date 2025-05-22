@@ -4,9 +4,17 @@
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function ContactPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+    subject: ''
+  })
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
@@ -31,6 +39,30 @@ export default function ContactPage() {
     }
   ];
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSubmitting(true);
+    console.log(formData);
+    try {
+      const res = await axios.post('/api/contact', formData);
+      console.log(res);
+      // refresh form
+      if (res) {
+        event.currentTarget.reset();
+        setFormData({
+          name: '',
+          email: '',
+          message: '',
+          subject: ''
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmitting(false);
+    } 
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -51,7 +83,7 @@ export default function ContactPage() {
             <div className="bg-white p-8 rounded-xl shadow-md">
               <h2 className="text-2xl font-bold text-black mb-6">Send Us a Message</h2>
               
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                     Your Name
@@ -60,7 +92,10 @@ export default function ContactPage() {
                     type="text"
                     id="name"
                     name="name"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    required
+                    className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent"
                     placeholder="John Doe"
                   />
                 </div>
@@ -73,7 +108,10 @@ export default function ContactPage() {
                     type="email"
                     id="email"
                     name="email"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    required
+                    className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent"
                     placeholder="johndoe@example.com"
                   />
                 </div>
@@ -85,8 +123,11 @@ export default function ContactPage() {
                   <input
                     type="text"
                     id="subject"
+                    value={formData.subject}
+                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    required
                     name="subject"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent"
+                    className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent"
                     placeholder="How can we help you?"
                   />
                 </div>
@@ -98,17 +139,21 @@ export default function ContactPage() {
                   <textarea
                     id="message"
                     name="message"
+                    required
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     rows={5}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent"
+                    className="w-full px-4 py-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent"
                     placeholder="Your message here..."
                   ></textarea>
                 </div>
                 
                 <button
                   type="submit"
-                  className="w-full bg-[var(--primary)] text-white py-3 px-4 rounded-md hover:bg-opacity-90 transition-colors duration-200"
+                  disabled={submitting}
+                  className="w-full bg-[var(--primary)] text-white py-3 px-4 rounded-md hover:bg-opacity-90 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send Message
+                  {submitting ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </div>
