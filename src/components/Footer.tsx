@@ -60,7 +60,7 @@ export default function Footer() {
             <div className="text-gray-400 text-sm">
               <p>Reg Number: 16438616</p>
               <p className="mt-2">
-                Address: Alpha Elemental Limited, Collingwood
+                Alpha Elemental Limited, Collingwood
                 Buildings, 38 Collingwood Street, Newcastle Upon Tyne, NE1 1JF
               </p>
             </div>
