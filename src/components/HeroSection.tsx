@@ -28,15 +28,15 @@ export default function HeroSection() {
               Premium lead generation resources for digital marketers, sales professionals, and business owners who want results, not theory.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row sm:gap-3">
-              <Link
+              {/* <Link
                 href="/signup"
                 className="w-full sm:w-auto flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-[var(--primary)] hover:bg-[#4A20C0] transform hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg"
               >
                 Get Started
-              </Link>
+              </Link> */}
               <Link
                 href="/products"
-                className="mt-3 sm:mt-0 w-full sm:w-auto flex items-center justify-center px-8 py-3 border border-white text-base font-medium rounded-full text-white bg-transparent hover:bg-white/10 transform hover:scale-105 transition-all duration-200"
+                className="w-full sm:w-auto flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-[var(--primary)] hover:bg-[#4A20C0] transform hover:scale-105 transition-all duration-200 shadow-md hover:shadow-lg"
               >
                 View Products
               </Link>

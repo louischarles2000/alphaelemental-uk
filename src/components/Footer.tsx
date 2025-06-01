@@ -60,7 +60,7 @@ export default function Footer() {
             <div className="text-gray-400 text-sm">
               <p>Reg Number: 16438616</p>
               <p className="mt-2">
-                Registered Address: Alpha Elemental Limited, Collingwood
+                Alpha Elemental Limited, Collingwood
                 Buildings, 38 Collingwood Street, Newcastle Upon Tyne, NE1 1JF
               </p>
             </div>
@@ -110,30 +110,6 @@ export default function Footer() {
                   className="text-gray-300 hover:text-[var(--accent)]"
                 >
                   FAQ
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#"
-                  className="text-gray-300 hover:text-[var(--accent)]"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#"
-                  className="text-gray-300 hover:text-[var(--accent)]"
-                >
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#"
-                  className="text-gray-300 hover:text-[var(--accent)]"
-                >
-                  Refund Policy
                 </Link>
               </li>
             </ul>
