@@ -26,7 +26,7 @@ export default function CategoriesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {loading && <div>Loading...</div>}
             {categories.map((category) => (
-              <Link href={`/categories/${category.id}?slug=${category.category_name.split(' ').join('-').trim().toLowerCase()}`} key={category.id}>
+              <Link href={`/categories/${category.slug}`} key={category.id}>
                 <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 flex flex-col h-full">
                   <div className="relative h-64">
                     <Image

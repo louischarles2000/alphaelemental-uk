@@ -17,6 +17,9 @@ export type ProductType = {
   meta_keywords?: string;
   images?: string[];
   image?: string;
+  slug: string;
+  date_modified: string;
+  date_added: string;
 }
 
 export type CategoryType = {
@@ -28,7 +31,7 @@ export type CategoryType = {
   meta_description: string;
   meta_title: string;
   meta_keywords?: string;
-  slug?: string;
+  slug: string;
   total_products: number;
 }
 

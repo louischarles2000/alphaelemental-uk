@@ -12,28 +12,45 @@ import CategoryBundles from "@/components/Screens/CategoryDetailsScreen/Category
 import { defaultCategories } from "@/lib/data";
 import OtherCategories from "@/components/Screens/CategoryDetailsScreen/OtherCategories";
 import { Metadata } from "next";
+import { cache } from "react";
 
-async function fetchCategory(id: number): Promise<CategoryType> {
-  const response = await axios.get(`${process.env.NEXT_PUBLIC_WEBSITE_URL!}/api/categories/${id}`);
-  return response.data.Data;
+export async function generateStaticParams() {
+  // Fetch all product slugs from the API
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL!}/category/static/slugs`);
+  if (!response.data || !Array.isArray(response.data.slugs)) {
+    return [];
+  }
+
+  // Map slugs to the format Next.js expects
+  return response.data.slugs;
 }
+
+const fetchCategory = cache(async (slug: string): Promise<CategoryType | null> => {
+  try {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_WEBSITE_URL!}/api/categories/slug/${slug}`);
+    return response.data.Data;
+  } catch (error) {
+    if (error) return null;
+    return null;
+  }
+});
 
 // Function to generate metadata
 export async function generateMetadata({
     params,
 }: {
-    params: Promise<{ id: number }>;
+    params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
+  const {slug } = await params;
 
-  if (!id) {
+  if (!slug) {
     return {
       title: 'Category Not Found',
       description: 'Category details not available.',
     };
   }
 
-  const category = await fetchCategory(id);
+  const category = await fetchCategory(slug);
 
   if (!category) {
     return {
@@ -55,14 +72,14 @@ export async function generateMetadata({
   };
 }
 
-export default async function CategoryDetail({ params }: { params: Promise<{ id: number }> }) {
-  const { id } = await params;
+export default async function CategoryDetail({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
 
-  if (!id) {
+  if (!slug) {
     notFound();
   }
   // Find the category based on the slug
-  const category = await fetchCategory(id);
+  const category = await fetchCategory(slug);
   
   // If category not found, return a 404 page
   if (!category) {

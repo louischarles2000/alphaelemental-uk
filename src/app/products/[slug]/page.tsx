@@ -14,28 +14,45 @@ import RelatedProducts from "@/components/Screens/ProductsScreen/RelatedProducts
 import ProductReviews from "@/components/Screens/ProductsScreen/ProductReviews";
 import { formatDecodedString } from "@/lib/utils";
 import { Metadata } from "next";
+import { cache } from "react";
 
-async function fetchProduct(id: number): Promise<ProductType> {
-  const response = await axios.get(`${process.env.NEXT_PUBLIC_WEBSITE_URL!}/api/products/${id}`);
-  return response.data.Data;
+export async function generateStaticParams() {
+  // Fetch all product slugs from the API
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL!}/product/static/slugs`, { params: { limit: 1000 } });
+  if (!response.data || !Array.isArray(response.data.slugs)) {
+    return [];
+  }
+
+  // Map slugs to the format Next.js expects
+  return response.data.slugs;
 }
+
+const fetchProduct = cache(async (slug: string): Promise<ProductType | null> => {
+  try {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_WEBSITE_URL!}/api/products/slug/${slug}`);
+    return response.data.Data;
+  } catch (error) {
+    if (error) return null;
+    return null;
+  }
+});
 
 // Function to generate metadata
 export async function generateMetadata({
     params,
 }: {
-    params: Promise<{ id: number }>;
+    params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
+  const { slug } = await params;
 
-  if (!id) {
+  if (!slug) {
     return {
       title: 'Product Not Found',
       description: 'Product details not available.',
     };
   }
 
-  const product = await fetchProduct(id);
+  const product = await fetchProduct(slug);
 
   if (!product) {
     return {
@@ -57,13 +74,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProductDetail({ params }: { params: Promise<{ id: number }> }) {
+export default async function ProductDetail({ params }: { params: Promise<{ slug: string }> }) {
   // Find the product based on the id
-  const { id } = await params;
-  if (!id) {
+  const { slug } = await params;
+  if (!slug) {
     notFound();
   }
-  const product = await fetchProduct(id);
+  const product = await fetchProduct(slug);
   
   // If product not found, you could return a 404 page or some fallback content
   if (!product) {
@@ -159,7 +176,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ id: 
                     </div>
 
                     <Link
-                      href={`${process.env.NEXT_PUBLIC_OPENCART_SHOP}&product_id=${id}`}
+                      href={`${process.env.NEXT_PUBLIC_OPENCART_SHOP}&product_id=${slug}`}
                       className="flex w-full justify-end self-end cursor-pointer"
                       target="_blank"
                       rel="noopener noreferrer"

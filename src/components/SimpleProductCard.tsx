@@ -24,7 +24,7 @@ function SimpleProductCard({ product }: { product: ProductType }) {
         </div>
         <div className="flex space-x-2">
           <Link
-            href={`/products/${product.id}?slug=${product.title.split(' ').join('-').toLowerCase()}`} 
+            href={`/products/${product.slug}`} 
             className="bg-white border border-[var(--primary)] text-[var(--primary)] px-4 py-2 rounded-lg text-sm font-medium hover:bg-[var(--primary)]/5 transition-colors duration-200"
           >
             View Details

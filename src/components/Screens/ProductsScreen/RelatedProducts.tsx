@@ -38,7 +38,7 @@ function RelatedProducts({ productId }: { productId: number }) {
       <h2 className="text-2xl font-bold text-black mb-8">You May Also Like</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map((relatedProduct) => (
-            <Link href={`/products/${relatedProduct.id}?slug=${relatedProduct.title.split(' ').join('-').toLowerCase()}`} key={relatedProduct.id}>
+            <Link href={`/products/${relatedProduct.slug}`} key={relatedProduct.id}>
               <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col">
                 <div className="relative h-48">
                   <Image

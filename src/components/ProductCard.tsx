@@ -15,7 +15,7 @@ function ProductCard({ product }: { product: ProductType }) {
   const defaultCat = !category ? null : defaultCategories.find((c) => c.slug === category?.category_name.split(' ').join('-').trim().toLowerCase());
  
   return (
-    <Link href={`/products/${product.id}?slug=${product.title.split(' ').join('-').toLowerCase()}`} key={product.id}>
+    <Link href={product.model === 'Bundle' ? `/bundles/${product.slug}` : `/products/${product.slug}`} key={product.id}>
       <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col">
         <div className="relative h-48">
           <Image
@@ -24,11 +24,19 @@ function ProductCard({ product }: { product: ProductType }) {
             layout="fill"
             objectFit="cover"
           />
-          {defaultCat && 
-          <div className="absolute top-2 right-2 bg-white text-[var(--primary)] text-xs font-semibold px-2 py-1 rounded-full">
-            {defaultCat?.tag}
+          <div className='absolute top-2 right-2 flex items-center gap-2'>
+            {defaultCat && (
+              <div className=" bg-white text-[var(--primary)] text-xs font-semibold px-2 py-1 rounded-full">
+                {defaultCat?.tag}
+              </div>
+            )}
+            {product.model === 'Bundle' && (
+              <div className=" text-white bg-yellow-600 text-xs font-semibold px-2 py-1 rounded-full">
+                Bundle
+              </div>
+            )}
           </div>
-          }
+          
         </div>
         <div className="p-5 flex flex-col flex-grow">
           <div>

@@ -23,7 +23,7 @@ function SimpleBundleCard({ bundle }: { bundle: ProductType }) {
           </div>
           <SavingFormat price={bundle.price} discount_price={bundle.discount_price}/>
           <Link 
-            href={`/bundles/${bundle.id}?slug=${bundle.title.split(' ').join('-').toLowerCase()}`} 
+            href={`/bundles/${bundle.slug}`} 
             className="w-full md:w-auto bg-[var(--accent)] text-black px-6 py-3 rounded-lg font-medium hover:bg-[var(--accent)]/90 transition-colors duration-200 text-center"
           >
             Buy This Bundle

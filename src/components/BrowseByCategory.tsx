@@ -15,7 +15,7 @@ export default function BrowseByCategory() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {categories.map((category) => (
-        <Link href={`/categories/${category.id}?slug=${category.category_name.split(' ').join('-').trim().toLowerCase()}`} key={category.id}>
+        <Link href={`/categories/${category.slug}`} key={category.id}>
           <div className="bg-white rounded-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 relative">
             <div className="h-56 w-full relative">
               <Image

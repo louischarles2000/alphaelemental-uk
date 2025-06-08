@@ -16,28 +16,45 @@ import sanitizeHtml from 'sanitize-html';
 import parse from 'html-react-parser';
 import { decode } from 'html-entities';
 import RelatedBundles from "@/components/Screens/BundlesScreen/RelatedBundles";
+import { cache } from "react";
 
-async function fetchBundle(id: number): Promise<ProductType> {
-  const response = await axios.get(`${process.env.NEXT_PUBLIC_WEBSITE_URL!}/api/products/${id}`);
-  return response.data.Data;
+export async function generateStaticParams() {
+  // Fetch all product slugs from the API
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL!}/product/static/slugs`, { params: { limit: 1000 } });
+  if (!response.data || !Array.isArray(response.data.slugs)) {
+    return [];
+  }
+
+  // Map slugs to the format Next.js expects
+  return response.data.slugs;
 }
+
+const fetchBundle = cache(async (slug: string): Promise<ProductType | null> => {
+  try {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_WEBSITE_URL!}/api/products/slug/${slug}`);
+    return response.data.Data;
+  } catch (error) {
+    if (error) return null;
+    return null;
+  }
+});
 
 // Function to generate metadata
 export async function generateMetadata({
     params,
 }: {
-    params: Promise<{ id: number }>;
+    params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
+  const { slug } = await params;
 
-  if (!id) {
+  if (!slug) {
     return {
       title: 'Bundle Not Found',
       description: 'Bundle details not available.',
     };
   }
 
-  const product = await fetchBundle(id);
+  const product = await fetchBundle(slug);
 
   if (!product) {
     return {
@@ -59,13 +76,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function BundleDetail({ params }: { params: Promise<{ id: number }> }) {
+export default async function BundleDetail({ params }: { params: Promise<{ slug: string }> }) {
   // Find the product based on the id
-  const { id } = await params;
-  if (!id) {
+  const { slug } = await params;
+  if (!slug) {
     notFound();
   }
-  const bundle = await fetchBundle(id);
+  const bundle = await fetchBundle(slug);
   
   // If bundle not found, return a 404 page
   if (!bundle) {
@@ -143,7 +160,7 @@ export default async function BundleDetail({ params }: { params: Promise<{ id: n
                   </p>
                   
                   <Link
-                    href={`${process.env.NEXT_PUBLIC_OPENCART_SHOP}&product_id=${id}`}
+                    href={`${process.env.NEXT_PUBLIC_OPENCART_SHOP}&product_id=${slug}`}
                     className="flex w-full justify-end self-end cursor-pointer"
                     target="_blank"
                     rel="noopener noreferrer"

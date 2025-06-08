@@ -80,7 +80,7 @@ function BundleCard({ bundle, simple }: { bundle: ProductType, simple?: boolean 
           </div>
         </div>
         
-        <Link href={`/bundles/${bundle.id}?slug=${bundle.title.split(' ').join('-').toLowerCase()}`} className="block w-full bg-[var(--primary)] hover:bg-[#4A20C0] text-white text-center py-2 rounded-lg font-medium transition-colors duration-200">
+        <Link href={`/bundles/${bundle.slug}`} className="block w-full bg-[var(--primary)] hover:bg-[#4A20C0] text-white text-center py-2 rounded-lg font-medium transition-colors duration-200">
           View Bundle
         </Link>
       </div>

@@ -10,7 +10,7 @@ import PriceFormat from "@/components/PriceFormat";
 export default function RelatedBundleCard({ bundle }: { bundle: ProductType }) {
 
   return (
-    <Link href={`/bundles/${bundle.id}?slug=${bundle.title.split(' ').join('-').toLowerCase()}`}>
+    <Link href={`/bundles/${bundle.slug}`}>
       <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col">
         <div className="relative h-48">
           <Image

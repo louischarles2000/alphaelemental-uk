@@ -74,7 +74,7 @@ export default function Footer() {
                 {categories.map((category) => (
                   <li key={category.id}>
                     <Link
-                      href={`/categories/${category.id}?slug=${category.category_name.split(' ').join('-').trim().toLowerCase()}`}
+                      href={`/categories/${category.slug}`}
                       className="text-gray-300 hover:text-[var(--accent)]"
                     >
                       {category.category_name}
