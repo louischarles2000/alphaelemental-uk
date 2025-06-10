@@ -176,7 +176,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ slug
                     </div>
 
                     <Link
-                      href={`${process.env.NEXT_PUBLIC_OPENCART_SHOP}&product_id=${slug}`}
+                      href={`${process.env.NEXT_PUBLIC_OPENCART_SHOP}&product_id=${product.id}`}
                       className="flex w-full justify-end self-end cursor-pointer"
                       target="_blank"
                       rel="noopener noreferrer"

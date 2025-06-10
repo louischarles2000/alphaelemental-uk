@@ -160,7 +160,7 @@ export default async function BundleDetail({ params }: { params: Promise<{ slug:
                   </p>
                   
                   <Link
-                    href={`${process.env.NEXT_PUBLIC_OPENCART_SHOP}&product_id=${slug}`}
+                    href={`${process.env.NEXT_PUBLIC_OPENCART_SHOP}&product_id=${bundle.id}`}
                     className="flex w-full justify-end self-end cursor-pointer"
                     target="_blank"
                     rel="noopener noreferrer"
