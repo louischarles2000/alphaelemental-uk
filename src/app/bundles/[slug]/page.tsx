@@ -18,17 +18,6 @@ import { decode } from 'html-entities';
 import RelatedBundles from "@/components/Screens/BundlesScreen/RelatedBundles";
 import { cache } from "react";
 
-export async function generateStaticParams() {
-  // Fetch all product slugs from the API
-  const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL!}/product/static/slugs`, { params: { limit: 1000 } });
-  if (!response.data || !Array.isArray(response.data.slugs)) {
-    return [];
-  }
-
-  // Map slugs to the format Next.js expects
-  return response.data.slugs;
-}
-
 const fetchBundle = cache(async (slug: string): Promise<ProductType | null> => {
   try {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_WEBSITE_URL!}/api/products/slug/${slug}`);
